@@ -1,0 +1,91 @@
+<h2 class="tab_panel_title mb-3">Manage Book Types</h2>
+
+<div class="d-flex justify-content-between">
+  <div>
+    <button
+      id="addBookTypeButton"
+      class="add_book_type_button custom_button add_button"
+      data-bs-toggle="modal"
+      data-bs-target="#add_book_type_modal"
+    >
+      <i class="fa-solid fa-plus add_icon"></i>
+      Add book type
+    </button>
+  </div>
+</div>
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+  <div
+    class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}"
+    role="alert"
+  >
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<table
+  id="manage_book_types_table"
+  class="table table-bordered border-dark mt-3"
+>
+  <thead class="border-dark">
+    <tr>
+      <th class="text-center text-white" style="background-color: #c8131a">
+        Book Type Name
+      </th>
+      <th class="text-center text-white" style="background-color: #c8131a">
+        Description
+      </th>
+      <th class="text-center text-white" style="background-color: #c8131a">
+        Date Time Created
+      </th>
+      <th class="text-center text-white" style="background-color: #c8131a">
+        Date Time Updated
+      </th>
+      <th class="text-center text-white" style="background-color: #c8131a">
+        Actions
+      </th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider text-center">
+    {% for book_type in book_types %}
+    <tr>
+      <td>{{ book_type.book_type_name }}</td>
+      <td>{{ book_type.description }}</td>
+      <td>{{ book_type.created_at }}</td>
+      <td>{{ book_type.updated_at }}</td>
+      <td>
+        <button
+          class="btn btn-warning edit_button"
+          data-bs-toggle="modal"
+          data-bs-target="#edit_book_type_modal_{{ book_type.id }}"
+        >
+          <i class="fa-solid fa-pen-to-square"></i>Edit
+        </button>
+        <button
+          class="btn btn-danger delete_button"
+          data-bs-toggle="modal"
+          data-bs-target="#delete_book_type_modal"
+        >
+          <i class="fa-solid fa-trash-can"></i>Delete
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- for add book type modal -->
+{% include 'bm/bm_modals/manage_book_types/add_book_type.html' %}
+
+<!-- for edit book type modal -->
+{% include 'bm/bm_modals/manage_book_types/edit_book_type.html' %}
+
+<!-- for edit book type confirmation modal -->
+{% include 'bm/bm_modals/manage_book_types/edit_type_confirmation.html' %}
+
+<!-- for delete book type modal -->
+{% include 'bm/bm_modals/manage_book_types/delete_book_type.html' %}
